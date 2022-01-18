@@ -46,7 +46,9 @@ public class Director{
             Scanner userIn = new Scanner(System.in);
             System.out.print("Keep playing? [y/n]: ");
 
-            choice = userIn.nextLine();            
+            choice = userIn.nextLine();        
+            
+            userIn.close();
         }
 
         if (this.score > 0 && choice.equalsIgnoreCase("y")){
@@ -98,6 +100,8 @@ public class Director{
 
         System.out.print("Higher or Lower? [h/l]: ");
         String guess = userIn.nextLine();
+
+        userIn.close();
 
         return guess;
     }
