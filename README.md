@@ -14,7 +14,6 @@ Java to allow me to learn the syntax for different executions of code.
 * Java JDK
 * Microsoft VS Code
 
-{Describe the programming language that you used and any libraries.}
 ### Java
 The language I used for this program is Java, which is an object oriented language
 that is very useful. I used the random library to create a random number, and I also
