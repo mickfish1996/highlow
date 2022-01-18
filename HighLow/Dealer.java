@@ -8,10 +8,16 @@ public class Dealer{
     private int card;
     private int numDraws;
 
+    /****************************************************************************
+     * 
+     ****************************************************************************/
     public Dealer(){
         this.numDraws = 0;
     }
 
+    /****************************************************************************
+     * 
+     ****************************************************************************/
     public boolean canDraw(int points){
         boolean canDo = false;
         if (points >= 0){
@@ -21,24 +27,30 @@ public class Dealer{
         return canDo;
     }
 
+    /****************************************************************************
+     * 
+     ****************************************************************************/
     public int getPoints(String guess, int lastCard){
         int points = 0;
-        if (guess == "h" && lastCard <= this.card){
+        if (guess.equalsIgnoreCase("h") && lastCard <= this.card){
             points = 100;
         }
-        else if (guess == "l" && lastCard >= this.card){
+        else if (guess.equalsIgnoreCase("l") && lastCard >= this.card){
             points = 100;
         }
-        else if (guess == "h" && lastCard > this.card){
+        else if (guess.equalsIgnoreCase("h") && lastCard > this.card){
             points = -75;
         }
-        else if (guess == "l" && lastCard < this.card){
+        else if (guess.equalsIgnoreCase("l") && lastCard < this.card){
             points = -75;
         }
 
         return points;
     }
 
+    /****************************************************************************
+     * 
+     ****************************************************************************/
     public void drawCard(){
         Random result = new Random();
 
@@ -46,8 +58,18 @@ public class Dealer{
         this.numDraws++;
     }
 
+    /****************************************************************************
+     * 
+     ****************************************************************************/
     public int getNumDraws(){
         return this.numDraws;
+    }
+    
+    /****************************************************************************
+     * 
+     ****************************************************************************/
+    public int getCard(){
+        return this.card;
     }
 
 }
