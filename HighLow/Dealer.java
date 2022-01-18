@@ -14,7 +14,7 @@ public class Dealer{
 
     public boolean canDraw(int points){
         boolean canDo = false;
-        if (points <= 0){
+        if (points >= 0){
             canDo = true;
         }
 
