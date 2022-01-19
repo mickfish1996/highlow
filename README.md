@@ -21,7 +21,7 @@ used the scanner library which is used to recive user input.
 
 ### Libraries
 * Scanner
-* FileReader
+* File
 * FileWriter
 
 # Useful Websites
