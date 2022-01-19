@@ -47,8 +47,7 @@ public class Director{
         if (!this.dealer.canDraw(this.score)){
             this.keepPlaying = false;
             System.out.println("Game Over!\n");
-            this.score = 300;
-            writeFile();
+
         } else {
             Scanner userIn = new Scanner(System.in);
             System.out.print("Keep playing? [y/n]: ");
@@ -61,6 +60,19 @@ public class Director{
             this.keepPlaying = true;
         } else {
             this.keepPlaying = false;
+
+            Scanner userIn = new Scanner(System.in);
+            System.out.print("Would you like to save your game? ");
+            String userAnswer = userIn.nextLine();
+
+            if (userAnswer.equalsIgnoreCase("y")){
+                System.out.print("Please Enter the name you would like to save as: ");
+                String fileName = userIn.nextLine();
+                writeFile(fileName);
+            }
+
+            
+
         }
     }
 
@@ -132,9 +144,9 @@ public class Director{
     /****************************************************************************
      * 
      ****************************************************************************/
-    private void writeFile(){
+    private void writeFile(String fileName){
         try {
-            FileWriter writer = new FileWriter("save.txt");
+            FileWriter writer = new FileWriter(fileName);
             writer.write(String.valueOf(this.score));
             writer.close();
             System.out.println("Save successful.");
