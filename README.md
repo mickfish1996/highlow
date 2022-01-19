@@ -19,6 +19,11 @@ The language I used for this program is Java, which is an object oriented langua
 that is very useful. I used the random library to create a random number, and I also
 used the scanner library which is used to recive user input.
 
+### Libraries
+* Scanner
+* FileReader
+* FileWriter
+
 # Useful Websites
 
 {Make a list of websites that you found helpful in this project}
