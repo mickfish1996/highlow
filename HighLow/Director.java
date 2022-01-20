@@ -57,21 +57,26 @@ public class Director{
      * name to save it to and then it will call writeFile.
      ****************************************************************************/
     private void doOutputs(){
-        drawCard();
-        displayCard();
-        this.guess = getInput();
-        this.lastCard = this.dealer.getCard();
-        drawCard();
-        doUpdates();
-        displayCard();
+        drawCard(); // draws card
+        displayCard(); // displays card
+        this.guess = getInput(); // receives the input
+        this.lastCard = this.dealer.getCard(); // sets the current card to last card
+        drawCard(); // draws a new card
+        doUpdates(); // gets the score
+        displayCard(); // displays the new card.
 
         System.out.println("Your score is: " + this.score + "\n");
         String choice = "";
+
+        // This will check and see if the user can keep playing, if canDraw returns false
+        // than it will set keepPlaying to False and print Game Over!
         if (!this.dealer.canDraw(this.score)){
             this.keepPlaying = false;
             System.out.println("Game Over!\n");
 
-        } else {
+        } 
+        // This else prompts the user to see if they would like to keep playing.
+        else {
             Scanner userIn = new Scanner(System.in);
             System.out.print("Keep playing? [y/n]: ");
 
@@ -79,17 +84,24 @@ public class Director{
             
         }
 
+        // if the user enters y and they have a score larger than zero it will let them keep
+        // playing.
         if (this.score > 0 && choice.equalsIgnoreCase("y")){
             this.keepPlaying = true;
-        } else {
+        } 
+        // This else will trigger if the score is less then zero of the user enter n.
+        else {
             this.keepPlaying = false;
 
             Scanner userIn = new Scanner(System.in);
 
+            // this if statement makes it so that only those who actually can save the
+            // game are given the option too.
             if (this.score > 0){
                 System.out.print("Would you like to save your game? ");
                 String userAnswer = userIn.nextLine();
 
+                // if the user wants to save than it will prompt for a file name from them.
                 if (userAnswer.equalsIgnoreCase("y")){
                     System.out.print("Please Enter the name you would like to save as: ");
                     String fileName = userIn.nextLine();
@@ -174,15 +186,16 @@ public class Director{
             while (reader.hasNextInt()){
                 this.score = reader.nextInt();
             }
-            reader.close();{
-            if (file.delete()){
+            reader.close();
+            // deletes the file that you read from.
+            if (file.delete()){ 
                 System.out.println("deleted The File: " + file.getName());
             } else {
                 System.out.println("Failed to delete the file");
             }
             
 
-            }
+            
         } catch (FileNotFoundException e){
             System.out.println("An Error occured.");
 
