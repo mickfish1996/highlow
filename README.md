@@ -1,4 +1,4 @@
-# HILOW
+# HILO
 A game that asks you to predict whether the next card is higher or lower than the current. It will 
 draw a card the user guesses if it is higher or lower and if the are correct than they get
 points, if they are wrong they have points taken away.
