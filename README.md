@@ -28,7 +28,7 @@ used the scanner library which is used to recive user input.
 
 {Make a list of websites that you found helpful in this project}
 * [W3 Schools](https://www.w3schools.com/java/default.asp)
-* [Web Site Name](http://url.link.goes.here)
+* [Geeks For Geeks](https://www.geeksforgeeks.org/java/?ref=shm)
 
 # Future Work
 

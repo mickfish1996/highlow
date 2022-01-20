@@ -26,6 +26,16 @@ public class Director{
      * 
      ****************************************************************************/
     public void startGame(){
+        Scanner userIn = new Scanner(System.in);
+        System.out.print("Would you like to load a file? [y/n]: ");
+        String answer = userIn.nextLine();
+
+        if (answer.equalsIgnoreCase("y")){
+            System.out.print("Enter the file name: ");
+            String fileName = userIn.nextLine();
+            readFile(fileName);
+        }
+        
         while (this.keepPlaying){
             doOutputs();
         }
@@ -62,13 +72,16 @@ public class Director{
             this.keepPlaying = false;
 
             Scanner userIn = new Scanner(System.in);
-            System.out.print("Would you like to save your game? ");
-            String userAnswer = userIn.nextLine();
 
-            if (userAnswer.equalsIgnoreCase("y")){
-                System.out.print("Please Enter the name you would like to save as: ");
-                String fileName = userIn.nextLine();
-                writeFile(fileName);
+            if (this.score > 0){
+                System.out.print("Would you like to save your game? ");
+                String userAnswer = userIn.nextLine();
+
+                if (userAnswer.equalsIgnoreCase("y")){
+                    System.out.print("Please Enter the name you would like to save as: ");
+                    String fileName = userIn.nextLine();
+                    writeFile(fileName);
+                }
             }
 
             
@@ -127,17 +140,25 @@ public class Director{
     /****************************************************************************
      * 
      ****************************************************************************/
-    private void readFile(){
+    private void readFile(String fileName){
         try {
-            File file = new File("save.txt");
+            File file = new File(".\\HighLow\\" + fileName + ".txt");
             Scanner reader = new Scanner(file);
-            while (reader.hasNextLine()){
+            while (reader.hasNextInt()){
                 this.score = reader.nextInt();
             }
-            reader.close();
+            reader.close();{
+            if (file.delete()){
+                System.out.println("deleted The File: " + file.getName());
+            } else {
+                System.out.println("Failed to delete the file");
+            }
+            
+
+            }
         } catch (FileNotFoundException e){
             System.out.println("An Error occured.");
-            e.printStackTrace();
+
         }
     }
 
@@ -146,13 +167,13 @@ public class Director{
      ****************************************************************************/
     private void writeFile(String fileName){
         try {
-            FileWriter writer = new FileWriter(fileName);
+            FileWriter writer = new FileWriter(".\\HighLow\\" + fileName + ".txt");
             writer.write(String.valueOf(this.score));
             writer.close();
             System.out.println("Save successful.");
         } catch (IOException e){
             System.out.println("An Error occurred.");
-            e.printStackTrace();
+            
         }
     }
 }
