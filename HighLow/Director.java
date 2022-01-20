@@ -15,7 +15,10 @@ public class Director{
     private int lastCard;
 
     /****************************************************************************
-     * 
+     * Director
+     * This is the fuction that is called whenever an instance of this class is
+     * created it sets keepPlaying to true, score to 300 and creats and instance
+     * of Dealer.
      ****************************************************************************/
     public Director(){
         this.keepPlaying = true;
@@ -23,7 +26,11 @@ public class Director{
         this.dealer = new Dealer();
     }
     /****************************************************************************
-     * 
+     * Start Game
+     * This function will prompt the user and see if they would like to pull a 
+     * previous score from a file, if they say yes than it prompts for the 
+     * filename that they would like to use, and will then call readFile, then
+     * after that it starts a while loop using keepPlaying and calls doOutputs.
      ****************************************************************************/
     public void startGame(){
         Scanner userIn = new Scanner(System.in);
@@ -41,7 +48,13 @@ public class Director{
         }
     }
     /****************************************************************************
-     * 
+     * Do Outpus
+     * This function will draw a card, then display it, it will prompt for a 
+     * guess from the user, it will then set that value to guess, it will display 
+     * your score and the new card. Then it checks if you can keep playing if you 
+     * can it will ask if you want to keep playing if yes than the cycle repeats,
+     * if no than it will ask if you want to save if yes it will prompt for file
+     * name to save it to and then it will call writeFile.
      ****************************************************************************/
     private void doOutputs(){
         drawCard();
@@ -90,15 +103,21 @@ public class Director{
     }
 
     /****************************************************************************
-     * 
+     * Do Updates
+     * This value will call getPoints from the dealer and will send guess and 
+     * last card and will get the value of points back.
      ****************************************************************************/
     private void doUpdates(){
         int points = this.dealer.getPoints(this.guess, this.lastCard);
 
         this.score += points;
     }
+
     /****************************************************************************
-     * 
+     * Display Card
+     * This function will determine what value to actually display to the screen
+     * for the card. If the value is 10 or lower it will just show the number, if
+     * the card is 11 or higher, it will display the value of the face card.
      ****************************************************************************/
     private void displayCard(){
         int card = dealer.getCard();
@@ -117,14 +136,18 @@ public class Director{
         }
     }
     /****************************************************************************
-     * 
+     * Draw card
+     * This function will call the function draw card from the dealer.
      ****************************************************************************/
     private void drawCard(){
         this.dealer.drawCard();
     }
 
     /****************************************************************************
-     * 
+     * Get Input
+     * This function will prompt the user if they think that the next card will
+     * be higher or lower than the current card. it will then get that guess 
+     * and return it to the function that calls it. 
      ****************************************************************************/
     private String getInput(){
         Scanner userIn = new Scanner(System.in);
@@ -138,7 +161,11 @@ public class Director{
     }
 
     /****************************************************************************
-     * 
+     * Read File
+     * This function will take the fileName that was entered in earlier, and will
+     * look for it, if it is there it will take the value that is in the file and
+     * set it to score, after that it will then delete the file so that there are
+     * not an excess of files in the directory.
      ****************************************************************************/
     private void readFile(String fileName){
         try {
@@ -163,7 +190,10 @@ public class Director{
     }
 
     /****************************************************************************
-     * 
+     * Write File
+     * This function will write the value of score into a file and save it to 
+     * the name of the file that the user wants to save it as in the HighLow 
+     * directory. If it cant write to it than it will through an error.
      ****************************************************************************/
     private void writeFile(String fileName){
         try {
