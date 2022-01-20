@@ -31,6 +31,6 @@ used the scanner library which is used to recive user input.
 
 # Future Work
 
-* Item 1
-* Item 2
-* Item 3
+* Create a json to more easily store more individual saves.
+* Create an interface system.
+
