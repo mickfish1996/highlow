@@ -26,13 +26,11 @@ used the scanner library which is used to recive user input.
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
 * [W3 Schools](https://www.w3schools.com/java/default.asp)
 * [Geeks For Geeks](https://www.geeksforgeeks.org/java/?ref=shm)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
 * Item 1
 * Item 2
 * Item 3
