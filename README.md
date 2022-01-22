@@ -23,6 +23,7 @@ used the scanner library which is used to recive user input.
 * Scanner
 * File
 * FileWriter
+* HashMap
 
 # Useful Websites
 

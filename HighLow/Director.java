@@ -1,11 +1,7 @@
 package HighLow;
 
-import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-
+import java.util.*;
+import java.io.*;
 
 public class Director{
     private boolean keepPlaying;
@@ -13,6 +9,7 @@ public class Director{
     private Dealer dealer;
     private String guess;
     private int lastCard;
+    private HashMap<String,Integer> saves = new HashMap<String,Integer>();
 
     /****************************************************************************
      * Director
@@ -33,16 +30,28 @@ public class Director{
      * after that it starts a while loop using keepPlaying and calls doOutputs.
      ****************************************************************************/
     public void startGame(){
+        readFile();
         Scanner userIn = new Scanner(System.in);
-        System.out.print("Would you like to load a file? [y/n]: ");
-        String answer = userIn.nextLine();
+        if (!saves.isEmpty()) {
+            System.out.print("Would you like to load a save? [y/n]: ");
+            String answer = userIn.nextLine();
 
-        if (answer.equalsIgnoreCase("y")){
-            System.out.print("Enter the file name: ");
-            String fileName = userIn.nextLine();
-            readFile(fileName);
+            if (answer.equalsIgnoreCase("y")) {
+                System.out.println();
+                
+                for (Map.Entry<String, Integer> key : saves.entrySet()){
+                    System.out.println(key.getKey());
+                }
+                System.out.print("\nEnter the save name: ");
+                String saveName = userIn.nextLine();
+                try {
+                    this.score = saves.get(saveName);
+                } catch (Exception e) {}
+
+                System.out.println("Yout score is: " + this.score);
+                
+            }
         }
-        
         while (this.keepPlaying){
             doOutputs();
         }
@@ -98,14 +107,16 @@ public class Director{
             // this if statement makes it so that only those who actually can save the
             // game are given the option too.
             if (this.score > 0){
-                System.out.print("Would you like to save your game? ");
+                System.out.print("Would you like to save your game? [y/n]: ");
                 String userAnswer = userIn.nextLine();
 
                 // if the user wants to save than it will prompt for a file name from them.
                 if (userAnswer.equalsIgnoreCase("y")){
                     System.out.print("Please Enter the name you would like to save as: ");
-                    String fileName = userIn.nextLine();
-                    writeFile(fileName);
+                    String saveName = userIn.nextLine();
+                    saveFile(saveName);
+                    writeFile();
+                    System.out.println("\nYour game has been saved!\n");
                 }
             }
 
@@ -135,16 +146,16 @@ public class Director{
         int card = dealer.getCard();
 
         if (card < 11){
-            System.out.println("The card is: " + card);
+            System.out.println("\nThe card is: " + card);
         }
         else if (card == 11){
-            System.out.println("The card is: Jack");
+            System.out.println("\nThe card is: Jack");
         }
         else if (card == 12){
-            System.out.println("The card is: Queen");
+            System.out.println("\nThe card is: Queen");
         }
         else if (card == 13){
-            System.out.println("The card is: King");
+            System.out.println("\nThe card is: King");
         }
     }
     /****************************************************************************
@@ -174,49 +185,77 @@ public class Director{
 
     /****************************************************************************
      * Read File
-     * This function will take the fileName that was entered in earlier, and will
-     * look for it, if it is there it will take the value that is in the file and
-     * set it to score, after that it will then delete the file so that there are
-     * not an excess of files in the directory.
+     * This function will take the read from the file saves.txt, if there is data
+     * in saves, it will load that data from the file and then store it in 
+     * the hash map saves.
      ****************************************************************************/
-    private void readFile(String fileName){
+    private void readFile(){
+        String filePath = ".\\HighLow\\saves.txt";
+        BufferedReader reader = null;
         try {
-            File file = new File(".\\HighLow\\" + fileName + ".txt");
-            Scanner reader = new Scanner(file);
-            while (reader.hasNextInt()){
-                this.score = reader.nextInt();
-            }
-            reader.close();
-            // deletes the file that you read from.
-            if (file.delete()){ 
-                System.out.println("deleted The File: " + file.getName());
-            } else {
-                System.out.println("Failed to delete the file");
+            File file = new File(filePath);
+            
+            reader = new BufferedReader(new FileReader(file));
+            
+            String line = null;
+
+            while ((line = reader.readLine()) != null){
+                // split the line up
+                String[] splitLine = line.split(":");
+
+                // first part is name of save, second it the score value
+                String name = splitLine[0].trim();
+                int score = Integer.valueOf(splitLine[1].trim());
+
+                if (!name.equals("")) {
+                    this.saves.put(name, score);
+                }
+
             }
             
 
             
-        } catch (FileNotFoundException e){
-            System.out.println("An Error occured.");
+        } catch (Exception e){
+            //e.printStackTrace();
 
+        } finally {
+            if (reader != null){
+                try {
+                    reader.close();
+                } catch (Exception e){};
+            }
         }
     }
 
     /****************************************************************************
      * Write File
-     * This function will write the value of score into a file and save it to 
-     * the name of the file that the user wants to save it as in the HighLow 
-     * directory. If it cant write to it than it will through an error.
+     * This function will write the value of saves to a txt file, in the format
+     * of saveName:scoreValue so that it can be read later.
      ****************************************************************************/
-    private void writeFile(String fileName){
+    private void writeFile(){
+        BufferedWriter writer = null;
         try {
-            FileWriter writer = new FileWriter(".\\HighLow\\" + fileName + ".txt");
-            writer.write(String.valueOf(this.score));
-            writer.close();
-            System.out.println("Save successful.");
+            writer = new BufferedWriter(new FileWriter(".\\HighLow\\saves.txt"));
+
+            for (Map.Entry<String, Integer> entry : saves.entrySet())
+            {
+                writer.write(entry.getKey() + ":" + entry.getValue());
+
+                writer.newLine();
+            }
+
+            writer.flush();
+
         } catch (IOException e){
-            System.out.println("An Error occurred.");
-            
+            e.printStackTrace();      
+        } finally {
+            try {
+                writer.close();
+            } catch (Exception e) {}
         }
+    }
+
+    private void saveFile(String saveName){
+        this.saves.put(saveName,this.score);
     }
 }
