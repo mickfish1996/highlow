@@ -254,7 +254,12 @@ public class Director{
             } catch (Exception e) {}
         }
     }
-
+    /****************************************************************************
+     * Save File
+     * What this function does is Add the key value pair to the hash map, it 
+     * takes the name of the save that was enterd and it adds that and the 
+     * current score to the hashmap.
+     ****************************************************************************/
     private void saveFile(String saveName){
         this.saves.put(saveName,this.score);
     }
